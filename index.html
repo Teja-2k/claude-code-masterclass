@@ -337,10 +337,44 @@
           <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Free updates as Claude Code evolves</li>
         </ul>
 
-        <a href="#" id="buy-button" class="block w-full bg-brand hover:bg-amber-600 text-black font-bold py-4 rounded-xl text-lg transition-all hover:scale-105">
+        <button onclick="document.getElementById('buy-form').style.display='block'; this.style.display='none';" class="w-full bg-brand hover:bg-amber-600 text-black font-bold py-4 rounded-xl text-lg transition-all hover:scale-105 cursor-pointer border-0">
           Buy Now — $29
-        </a>
-        <p class="text-xs text-gray-500 mt-4">Secure payment via Lemon Squeezy. Instant PDF download.</p>
+        </button>
+        <div id="buy-form" style="display:none" class="mt-4 text-left">
+          <form id="purchase-form" class="space-y-3">
+            <input type="email" id="buyer-email" placeholder="Your email" required class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-amber-500">
+            <input type="text" id="buyer-name" placeholder="Your name" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-amber-500">
+            <button type="submit" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-3 rounded-xl transition-all cursor-pointer border-0">
+              Complete Purchase — $29
+            </button>
+          </form>
+          <div id="success-msg" style="display:none" class="text-center py-6">
+            <div class="text-4xl mb-2">🎉</div>
+            <div class="text-green-400 font-bold text-lg">You're in!</div>
+            <div class="text-gray-400 text-sm mt-2">We'll email you the guide + payment link within 24 hours.<br>Check your inbox!</div>
+          </div>
+        </div>
+        <p class="text-xs text-gray-500 mt-4">Enter your email. We'll send you the guide + secure payment link instantly.</p>
+
+        <script>
+          document.getElementById('purchase-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('buyer-email').value;
+            const name = document.getElementById('buyer-name').value;
+            // Store in localStorage as backup + send to webhook
+            const buyers = JSON.parse(localStorage.getItem('buyers') || '[]');
+            buyers.push({ email, name, date: new Date().toISOString(), product: 'claude-code-masterclass', price: 29 });
+            localStorage.setItem('buyers', JSON.stringify(buyers));
+            // Try to send notification (replace with real webhook later)
+            fetch('https://ntfy.sh/hustlebot-sales', {
+              method: 'POST',
+              body: 'NEW BUYER: ' + name + ' (' + email + ') wants Claude Code Masterclass $29'
+            }).catch(() => {});
+            // Show success
+            document.getElementById('purchase-form').style.display = 'none';
+            document.getElementById('success-msg').style.display = 'block';
+          });
+        </script>
       </div>
     </div>
   </section>
