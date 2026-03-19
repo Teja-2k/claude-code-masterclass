@@ -400,5 +400,18 @@
     </div>
   </footer>
 
+<!-- Track clicks on buy button -->
+<script>
+document.querySelectorAll('a[href*="paypal"]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    fetch('https://ntfy.sh/hustlebot-sales-teja2k', {
+      method: 'POST',
+      headers: { 'Title': 'Buy Button Clicked!', 'Priority': 'default', 'Tags': 'eyes' },
+      body: 'Someone clicked Buy Now on Claude Code Masterclass at ' + new Date().toISOString()
+    }).catch(() => {});
+  });
+});
+</script>
+
 </body>
 </html>
