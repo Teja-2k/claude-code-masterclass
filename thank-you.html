@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You — Claude Code Masterclass</title>
+  <meta name="robots" content="noindex, nofollow">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#D97706',
+            dark: '#0F172A',
+            darker: '#020617',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .gradient-text {
+      background: linear-gradient(135deg, #F59E0B, #D97706, #B45309);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .glow { box-shadow: 0 0 60px rgba(217, 119, 6, 0.15); }
+  </style>
+</head>
+<body class="bg-darker text-white min-h-screen flex items-center justify-center">
+
+  <div class="max-w-lg mx-auto text-center px-6 py-20">
+    <div class="text-6xl mb-6">🎉</div>
+    <h1 class="text-4xl font-black mb-4">Thank You!</h1>
+    <p class="text-xl text-gray-300 mb-8">Your purchase of the Claude Code Masterclass is confirmed.</p>
+
+    <div class="bg-slate-800/50 border border-amber-500/20 rounded-2xl p-8 glow mb-8">
+      <h2 class="text-xl font-bold mb-4">Access Your Guide</h2>
+      <p class="text-gray-400 mb-6">Click below to open the full masterclass. Bookmark this page for future access.</p>
+
+      <a href="guide.html" class="block w-full bg-brand hover:bg-amber-600 text-black font-bold py-4 rounded-xl text-lg transition-all hover:scale-105 text-center no-underline cursor-pointer mb-4">
+        Open the Masterclass
+      </a>
+
+      <p class="text-xs text-gray-500">Tip: Right-click the guide page and "Save As" to keep an offline copy.</p>
+    </div>
+
+    <div class="bg-slate-800/30 border border-slate-700/30 rounded-xl p-6 text-left text-sm">
+      <h3 class="font-semibold mb-3">What's included:</h3>
+      <ul class="space-y-2 text-gray-400">
+        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Full 12-chapter guide (120+ pages)</li>
+        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 50+ real code examples</li>
+        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Agent system blueprints</li>
+        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Free updates — check back for new versions</li>
+      </ul>
+    </div>
+
+    <div class="mt-8 text-sm text-gray-500">
+      <p>Questions? Email <span class="text-gray-300">saitejajesetti@gmail.com</span></p>
+    </div>
+  </div>
+
+</body>
+</html>
