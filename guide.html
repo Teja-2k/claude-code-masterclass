@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code Masterclass — The Complete Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #12121a;
+    --bg-card: #16161f;
+    --bg-code: #1a1a26;
+    --border: #2a2a3a;
+    --text-primary: #e8e8f0;
+    --text-secondary: #9898b0;
+    --text-muted: #6a6a80;
+    --accent: #7c6aff;
+    --accent-light: #9d8eff;
+    --accent-dim: #4a3cb8;
+    --green: #34d399;
+    --green-dim: #064e3b;
+    --yellow: #fbbf24;
+    --yellow-dim: #713f12;
+    --red: #f87171;
+    --red-dim: #7f1d1d;
+    --blue: #60a5fa;
+    --blue-dim: #1e3a5f;
+    --orange: #fb923c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.75;
+    font-size: 16.5px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Header */
+  .site-header {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, #1a1028 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(20px);
+  }
+  .site-header h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, var(--accent-light), var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .site-header .subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Layout */
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  /* Table of Contents */
+  .toc {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2.5rem;
+    margin: 3rem 0;
+  }
+  .toc h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--accent-light);
+  }
+  .toc .part-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 1.2rem;
+    margin-bottom: 0.4rem;
+  }
+  .toc .part-label:first-of-type { margin-top: 0; }
+  .toc a {
+    display: block;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 0.35rem 0 0.35rem 1rem;
+    font-size: 0.95rem;
+    border-left: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .toc a:hover {
+    color: var(--text-primary);
+    border-left-color: var(--accent);
+    padding-left: 1.3rem;
+  }
+  .toc a .ch-num {
+    color: var(--accent);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    margin-right: 0.5rem;
+  }
+
+  /* Chapters */
+  .chapter {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .chapter-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .part-divider {
+    margin-top: 5rem;
+    text-align: center;
+    padding: 2rem 0;
+  }
+  .part-divider h2 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    position: relative;
+  }
+  .part-divider h2::before, .part-divider h2::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 80px;
+    height: 1px;
+    background: var(--border);
+  }
+  .part-divider h2::before { right: calc(100% + 1rem); }
+  .part-divider h2::after { left: calc(100% + 1rem); }
+
+  h2 {
+    font-size: 1.7rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+  }
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-top: 2.2rem;
+    margin-bottom: 0.8rem;
+    color: var(--text-primary);
+  }
+  h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 1.6rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+  }
+
+  p { margin-bottom: 1rem; color: var(--text-secondary); }
+  strong { color: var(--text-primary); font-weight: 600; }
+  em { font-style: italic; }
+
+  ul, ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    color: var(--text-secondary);
+  }
+  li { margin-bottom: 0.4rem; }
+  li strong { color: var(--text-primary); }
+
+  /* Code */
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    background: var(--bg-code);
+    color: var(--accent-light);
+    padding: 0.15em 0.45em;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+  pre {
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.3rem 1.5rem;
+    margin-bottom: 1.2rem;
+    overflow-x: auto;
+    position: relative;
+  }
+  pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+  }
+  pre .prompt { color: var(--green); user-select: none; }
+  pre .comment { color: var(--text-muted); font-style: italic; }
+  pre .string { color: var(--green); }
+  pre .keyword { color: var(--accent-light); }
+  pre .flag { color: var(--yellow); }
+  pre .output { color: var(--text-muted); }
+  pre .file { color: var(--orange); }
+  pre .url { color: var(--blue); }
+
+  .code-label {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.8rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: var(--bg-primary);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  /* Callout boxes */
+  .tip, .warning, .exercise, .mistake {
+    border-radius: 10px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+    border-left: 3px solid;
+  }
+  .tip {
+    background: var(--green-dim);
+    border-color: var(--green);
+  }
+  .tip .label { color: var(--green); }
+  .warning {
+    background: var(--yellow-dim);
+    border-color: var(--yellow);
+  }
+  .warning .label { color: var(--yellow); }
+  .mistake {
+    background: var(--red-dim);
+    border-color: var(--red);
+  }
+  .mistake .label { color: var(--red); }
+  .exercise {
+    background: var(--blue-dim);
+    border-color: var(--blue);
+  }
+  .exercise .label { color: var(--blue); }
+  .tip .label, .warning .label, .exercise .label, .mistake .label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .tip p, .warning p, .exercise p, .mistake p {
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+  }
+  .tip p:last-child, .warning p:last-child, .exercise p:last-child, .mistake p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Footer */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+  .site-footer .brand {
+    font-weight: 700;
+    color: var(--accent-light);
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .container { padding: 0 1rem 4rem; }
+    .toc { padding: 1.5rem; }
+    h2 { font-size: 1.4rem; }
+    pre { padding: 1rem; font-size: 0.82rem; }
+  }
+
+  /* Print-friendly */
+  @media print {
+    body { background: #fff; color: #111; }
+    .site-header { position: static; background: none; border: none; }
+    .site-header h1 { background: none; -webkit-text-fill-color: #111; }
+    code { background: #f0f0f0; color: #333; border-color: #ccc; }
+    pre { background: #f5f5f5; border-color: #ccc; }
+    pre code { color: #333; }
+    .tip, .warning, .exercise, .mistake { break-inside: avoid; }
+    .chapter { break-before: page; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>Claude Code Masterclass</h1>
+  <div class="subtitle">The Complete Guide to AI-Powered Development</div>
+</header>
+
+<div class="container">
+
+<!-- TABLE OF CONTENTS -->
+<nav class="toc">
+  <h2>Table of Contents</h2>
+
+  <div class="part-label">Part 1 &mdash; Foundation</div>
+  <a href="#ch01"><span class="ch-num">01</span> What Claude Code Actually Is (and Isn't)</a>
+  <a href="#ch02"><span class="ch-num">02</span> Installation &amp; First 10 Minutes</a>
+  <a href="#ch03"><span class="ch-num">03</span> The Mental Model</a>
+
+  <div class="part-label">Part 2 &mdash; Building Real Things</div>
+  <a href="#ch04"><span class="ch-num">04</span> Your First Full Project</a>
+  <a href="#ch05"><span class="ch-num">05</span> Working with Existing Codebases</a>
+  <a href="#ch06"><span class="ch-num">06</span> The Debug Loop</a>
+
+  <div class="part-label">Part 3 &mdash; Advanced Techniques</div>
+  <a href="#ch07"><span class="ch-num">07</span> Multi-File Orchestration</a>
+  <a href="#ch08"><span class="ch-num">08</span> Headless Mode &amp; Automation</a>
+  <a href="#ch09"><span class="ch-num">09</span> Custom Tools &amp; MCP Servers</a>
+
+  <div class="part-label">Part 4 &mdash; Agent Systems</div>
+  <a href="#ch10"><span class="ch-num">10</span> Building AI Agents with Claude Code</a>
+  <a href="#ch11"><span class="ch-num">11</span> The Product Factory</a>
+  <a href="#ch12"><span class="ch-num">12</span> Scaling to $1K/Day</a>
+</nav>
+
+<!-- ============================================================ -->
+<!-- PART 1: FOUNDATION -->
+<!-- ============================================================ -->
+
+<div class="part-divider"><h2>Part 1 &mdash; Foundation</h2></div>
+
+<!-- CHAPTER 1 -->
+<section class="chapter" id="ch01">
+<div class="chapter-label">Chapter 01</div>
+<h2>What Claude Code Actually Is (and Isn't)</h2>
+
+<p>Claude Code is not another AI chatbot with a code editor bolted on. It is a <strong>terminal-native agentic coding tool</strong> built by Anthropic that runs directly in your shell, reads your files, executes commands, and writes code &mdash; all with your explicit permission. Understanding this distinction is the single most important thing that separates beginners from power users.</p>
+
+<h3>The CLI Architecture</h3>
+
+<p>When you launch Claude Code, you are starting an interactive agent session inside your terminal. Here is what actually happens under the hood:</p>
+
+<ol>
+  <li><strong>Your terminal becomes the interface.</strong> There is no browser, no Electron app, no VS Code panel. Your shell &mdash; the same one you use for <code>git</code>, <code>npm</code>, and <code>ssh</code> &mdash; is now your AI coding environment.</li>
+  <li><strong>Claude sees your filesystem.</strong> It can read files, list directories, search code, and understand your project structure. It has the same view of your codebase that you do.</li>
+  <li><strong>Claude executes real commands.</strong> When it needs to install a dependency, run a test, or start a dev server, it runs actual shell commands. Nothing is simulated.</li>
+  <li><strong>Everything requires permission.</strong> By default, Claude asks before reading sensitive files, writing changes, or executing commands. You are always in control.</li>
+</ol>
+
+<h3>How This Differs from ChatGPT, Copilot, and Cursor</h3>
+
+<p>Most AI coding tools follow a <strong>suggestion model</strong>: they predict what you might type next and offer autocomplete. This is useful for writing boilerplate, but it fundamentally limits what AI can do for you.</p>
+
+<p>Claude Code follows an <strong>agent model</strong>: you describe what you want, and it figures out the steps, reads the relevant files, makes the changes, runs the tests, and iterates until the job is done. The difference is not incremental &mdash; it is categorical.</p>
+
+<table style="width:100%; border-collapse:collapse; margin:1rem 0 1.5rem;">
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.6rem 1rem; color:var(--text-muted); font-size:0.85rem;">Feature</td>
+    <td style="padding:0.6rem 1rem; color:var(--text-muted); font-size:0.85rem;">Copilot/Cursor</td>
+    <td style="padding:0.6rem 1rem; color:var(--text-muted); font-size:0.85rem;">Claude Code</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Interface</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">IDE plugin</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Terminal CLI</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Scope</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Current file</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Entire project</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Can run commands</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Limited</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Full shell access</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Multi-file edits</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Manual</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Automatic</td>
+  </tr>
+  <tr>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Can test its own work</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">No</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Yes</td>
+  </tr>
+</table>
+
+<h3>Why Terminal-First Matters</h3>
+
+<p>The terminal is the most powerful interface on your computer. Every deployment tool, every build system, every version control command, every server management utility &mdash; they all live in the terminal. By operating natively in this environment, Claude Code can:</p>
+
+<ul>
+  <li>Chain together complex workflows (<code>git</code> + build + test + deploy)</li>
+  <li>Work in any language, framework, or environment without plugins</li>
+  <li>Integrate with your existing toolchain seamlessly</li>
+  <li>Run on remote servers via SSH just as easily as on your local machine</li>
+  <li>Be scripted, automated, and composed into larger pipelines</li>
+</ul>
+
+<div class="tip">
+  <span class="label">Pro Tip</span>
+  <p>Claude Code works best when you think of it as a <strong>senior developer sitting at your terminal</strong>. You would not micromanage a senior developer line by line. You would describe the task, let them explore the codebase, and review their work when they are done.</p>
+</div>
+
+<div class="mistake">
+  <span class="label">Common Mistake</span>
+  <p>Treating Claude Code like a chatbot and asking it to "explain how to write a React component." Claude Code is a <em>doing</em> tool, not a <em>teaching</em> tool. Instead, say: "Create a React component that displays a user profile card with name, avatar, and bio."</p>
+</div>
+
+<div class="exercise">
+  <span class="label">Try This Now</span>
+  <p>Open your terminal and run <code>claude</code>. When the session starts, type: <code>What files are in this directory?</code> &mdash; watch how Claude Code actually reads your filesystem instead of guessing. Then ask it to create a simple file and observe how it asks for permission before writing.</p>
+</div>
+</section>
+
+<!-- CHAPTER 2 -->
+<section class="chapter" id="ch02">
+<div class="chapter-label">Chapter 02</div>
+<h2>Installation &amp; First 10 Minutes</h2>
+
+<p>Getting Claude Code running takes less than two minutes. Here is the exact process for every major platform.</p>
+
+<h3>Prerequisites</h3>
+
+<p>You need two things before installing Claude Code:</p>
+<ul>
+  <li><strong>Node.js 18+</strong> &mdash; Check with <code>node --version</code>. If you need to install it, use <a href="https://nodejs.org" style="color:var(--blue);">nodejs.org</a> or your system package manager.</li>
+  <li><strong>An Anthropic API key or a Claude Pro/Max subscription</strong> &mdash; Claude Code can authenticate through your Anthropic account directly or via an API key.</li>
+</ul>
+
+<h3>Installation</h3>
+
+<pre><code><span class="comment"># Install Claude Code globally via npm</span>
+<span class="prompt">$</span> npm install -g @anthropic-ai/claude-code
+
+<span class="comment"># Verify the installation</span>
+<span class="prompt">$</span> claude --version
+<span class="output">claude-code v1.x.x</span>
+
+<span class="comment"># Start your first session</span>
+<span class="prompt">$</span> claude</code></pre>
+
+<p>On first launch, Claude Code will open your browser to authenticate. Sign in with your Anthropic account, grant permission, and you are ready to go. The authentication token is stored locally and you will not need to sign in again.</p>
+
+<h3>macOS-Specific Notes</h3>
+
+<pre><code><span class="comment"># If you use Homebrew and don't have Node.js:</span>
+<span class="prompt">$</span> brew install node
+<span class="prompt">$</span> npm install -g @anthropic-ai/claude-code</code></pre>
+
+<h3>Windows-Specific Notes</h3>
+
+<p>Claude Code works on Windows through <strong>WSL2</strong> (Windows Subsystem for Linux) or natively in PowerShell/Git Bash. WSL2 is strongly recommended for the best experience:</p>
+
+<pre><code><span class="comment"># In WSL2 (Ubuntu):</span>
+<span class="prompt">$</span> sudo apt update && sudo apt install nodejs npm
+<span class="prompt">$</span> npm install -g @anthropic-ai/claude-code
+
+<span class="comment"># Or natively in PowerShell/Git Bash:</span>
+<span class="prompt">$</span> npm install -g @anthropic-ai/claude-code</code></pre>
+
+<h3>Linux Notes</h3>
+
+<pre><code><span class="comment"># Debian/Ubuntu:</span>
+<span class="prompt">$</span> curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+<span class="prompt">$</span> sudo apt install -y nodejs
+<span class="prompt">$</span> npm install -g @anthropic-ai/claude-code</code></pre>
+
+<h3>Your First 10 Minutes</h3>
+
+<p>Once installed, navigate to any project directory (or an empty one) and launch Claude Code:</p>
+
+<pre><code><span class="prompt">$</span> mkdir my-first-project && cd my-first-project
+<span class="prompt">$</span> claude</code></pre>
+
+<p>Here are the first five things to try, in order:</p>
+
+<h4>1. Ask Claude Code to explore</h4>
+<pre><code><span class="prompt">&gt;</span> What's in this directory? If it's empty, create a simple Node.js project with a package.json and an index.js that starts an Express server on port 3000.</code></pre>
+
+<h4>2. Ask it to run the project</h4>
+<pre><code><span class="prompt">&gt;</span> Install the dependencies and start the server. Show me the output.</code></pre>
+
+<h4>3. Ask it to modify code</h4>
+<pre><code><span class="prompt">&gt;</span> Add a /health endpoint that returns { status: "ok", timestamp: Date.now() }</code></pre>
+
+<h4>4. Ask it to test</h4>
+<pre><code><span class="prompt">&gt;</span> Use curl to hit the /health endpoint and show me the response.</code></pre>
+
+<h4>5. Ask it to commit</h4>
+<pre><code><span class="prompt">&gt;</span> Initialize a git repo and commit everything with a good commit message.</code></pre>
+
+<h3>Understanding the Permission Model</h3>
+
+<p>Claude Code has a layered permission system designed to keep you in control:</p>
+
+<ul>
+  <li><strong>Read permissions:</strong> Claude can freely read files in your project directory. It will ask before reading files outside the project root or sensitive files like <code>.env</code>.</li>
+  <li><strong>Write permissions:</strong> Claude always asks before creating or modifying files. You will see a diff of what it wants to change and can approve or reject.</li>
+  <li><strong>Execute permissions:</strong> Claude asks before running shell commands. You can approve individual commands or allow categories of commands (e.g., "allow all npm commands").</li>
+</ul>
+
+<p>You can pre-configure permissions using a <code>.claude/settings.json</code> file in your project or your home directory:</p>
+
+<pre><code><span class="comment">// .claude/settings.json</span>
+{
+  <span class="string">"permissions"</span>: {
+    <span class="string">"allow"</span>: [
+      <span class="string">"read"</span>,
+      <span class="string">"bash(npm *)"</span>,
+      <span class="string">"bash(node *)"</span>,
+      <span class="string">"bash(git *)"</span>
+    ]
+  }
+}</code></pre>
+
+<div class="tip">
+  <span class="label">Pro Tip</span>
+  <p>For projects you trust, create a <code>.claude/settings.json</code> that pre-allows common operations. This eliminates the "approve/deny" friction and lets Claude Code work at full speed. For unfamiliar codebases, keep the defaults &mdash; the approval prompts are your safety net.</p>
+</div>
+
+<div class="warning">
+  <span class="label">Warning</span>
+  <p>Never blindly approve commands you don't understand. Claude Code will sometimes suggest running destructive commands like <code>rm -rf</code> or <code>git reset --hard</code>. Always read the command before approving. The permission system exists for a reason.</p>
+</div>
+
+<div class="exercise">
+  <span class="label">Try This Now</span>
+  <p>Create a fresh directory, launch Claude Code inside it, and walk through all five steps above. Pay attention to the permission prompts &mdash; notice how Claude asks before each write and execute operation. Try rejecting one request and giving different instructions to see how it adapts.</p>
+</div>
+</section>
+
+<!-- CHAPTER 3 -->
+<section class="chapter" id="ch03">
+<div class="chapter-label">Chapter 03</div>
+<h2>The Mental Model</h2>
+
+<p>The number one reason people fail with Claude Code is that they use it like a chatbot. They type short, vague prompts and expect magic. The number one reason people succeed is that they learn to <strong>think in tasks</strong>.</p>
+
+<h3>Think in Tasks, Not Conversations</h3>
+
+<p>A conversation is open-ended. A task has a clear beginning, a set of concrete steps, and a verifiable end state. When you interact with Claude Code, you should always be assigning a task.</p>
+
+<p><strong>Bad prompt (conversation style):</strong></p>
+<pre><code><span class="prompt">&gt;</span> How do I add authentication to my app?</code></pre>
+
+<p><strong>Good prompt (task style):</strong></p>
+<pre><code><span class="prompt">&gt;</span> Add JWT authentication to this Express app. Create a /auth/login endpoint that
+  accepts email and password, validates against the users table in our SQLite
+  database, and returns a JWT token. Add middleware that protects all /api/*
+  routes. Use the jsonwebtoken package.</code></pre>
+
+<p>Notice the difference. The good prompt specifies:</p>
+<ul>
+  <li><strong>What</strong> to build (JWT auth with login endpoint + middleware)</li>
+  <li><strong>Where</strong> it goes (Express app, /auth/login, /api/* routes)</li>
+  <li><strong>How</strong> it connects (SQLite database, users table)</li>
+  <li><strong>What tools to use</strong> (jsonwebtoken package)</li>
+</ul>
+
+<h3>The Context Window Strategy</h3>
+
+<p>Claude Code operates within a context window &mdash; a limited amount of information it can hold in active memory at once. This is the most important technical constraint to understand, and managing it well is what separates intermediate users from advanced ones.</p>
+
+<p><strong>The key principles:</strong></p>
+
+<ol>
+  <li><strong>Start fresh for new tasks.</strong> If you have finished adding authentication and now want to refactor the database layer, start a new session. Leftover context from the previous task will confuse the model and waste context space.</li>
+  <li><strong>Front-load critical information.</strong> Put the most important details at the beginning of your prompt. If there is a specific file Claude needs to look at, name it explicitly.</li>
+  <li><strong>Use the <code>/clear</code> command.</strong> Mid-session, if the conversation has gotten long and wandering, type <code>/clear</code> to reset the context without restarting. Then re-state your task clearly.</li>
+  <li><strong>Reference files instead of pasting code.</strong> Instead of pasting 200 lines of code into your prompt, say "Look at <code>src/auth/middleware.js</code>." Claude Code can read the file directly, and file reads are more token-efficient than pasted code.</li>
+</ol>
+
+<h3>The STAR Framework for Prompts</h3>
+
+<p>When you are not sure how to phrase a task, use the STAR framework:</p>
+
+<ul>
+  <li><strong>S</strong>ituation &mdash; What is the current state? ("I have an Express app with a SQLite database")</li>
+  <li><strong>T</strong>ask &mdash; What do you want done? ("Add JWT authentication")</li>
+  <li><strong>A</strong>pproach &mdash; Any specific method? ("Use the jsonwebtoken package, store tokens in httpOnly cookies")</li>
+  <li><strong>R</strong>esult &mdash; What does success look like? ("All /api routes should return 401 without a valid token")</li>
+</ul>
+
+<h3>Iterating Effectively</h3>
+
+<p>Even with perfect prompts, Claude Code will sometimes get things wrong. The key is efficient iteration:</p>
+
+<pre><code><span class="comment"># First attempt - be specific about the problem</span>
+<span class="prompt">&gt;</span> The login endpoint is returning 500. Check the error logs and fix the issue.
+
+<span class="comment"># Not this - too vague</span>
+<span class="prompt">&gt;</span> It's not working, fix it.</code></pre>
+
+<p>When iterating, <strong>describe the symptom, not the diagnosis</strong>. Say "the endpoint returns 500" rather than "I think there is a null pointer exception in the auth middleware." Let Claude Code investigate &mdash; it often finds root causes faster than you expect.</p>
+
+<div class="tip">
+  <span class="label">Pro Tip</span>
+  <p>The <code>CLAUDE.md</code> file is your secret weapon. Create a file called <code>CLAUDE.md</code> in your project root with notes about your project: the tech stack, coding conventions, important file locations, and anything Claude needs to know. Claude Code reads this file automatically at the start of every session.</p>
+</div>
+
+<pre><code><span class="comment"># CLAUDE.md - Example</span>
+
+## Project: SaaS Dashboard
+- <span class="keyword">Stack</span>: Next.js 14, TypeScript, Prisma, PostgreSQL
+- <span class="keyword">Style</span>: Use Tailwind CSS, prefer server components
+- <span class="keyword">Tests</span>: Vitest for unit, Playwright for e2e
+- <span class="keyword">Key dirs</span>: src/app/ (pages), src/lib/ (utilities), prisma/ (schema)
+- <span class="keyword">Convention</span>: All API routes in src/app/api/, use zod for validation
+- <span class="keyword">Deploy</span>: Vercel, auto-deploy from main branch</code></pre>
+
+<div class="exercise">
+  <span class="label">Try This Now</span>
+  <p>Open a project you are working on (or create one). Write a <code>CLAUDE.md</code> file for it. Include your tech stack, key directories, coding conventions, and any gotchas. Then start a Claude Code session and give it a task &mdash; notice how it automatically picks up the context from <code>CLAUDE.md</code> and produces more aligned output.</p>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 2: BUILDING REAL THINGS -->
+<!-- ============================================================ -->
+
+<div class="part-divider"><h2>Part 2 &mdash; Building Real Things</h2></div>
+
+<!-- CHAPTER 4 -->
+<section class="chapter" id="ch04">
+<div class="chapter-label">Chapter 04</div>
+<h2>Your First Full Project</h2>
+
+<p>Theory is nothing without practice. In this chapter, we will build a complete web application from scratch using only Claude Code &mdash; from initializing the project to having a deployed, working app.</p>
+
+<h3>What We Are Building</h3>
+
+<p>A <strong>Bookmark Manager</strong> &mdash; a web app where users can save URLs with tags, search their bookmarks, and export them. It is simple enough to build in one session but complex enough to demonstrate real-world patterns.</p>
+
+<h3>Step 1: Project Initialization</h3>
+
+<pre><code><span class="prompt">$</span> mkdir bookmark-manager && cd bookmark-manager
+<span class="prompt">$</span> claude
+
+<span class="prompt">&gt;</span> Initialize a new Next.js 14 project with TypeScript and Tailwind CSS.
+  Use the app router. Set up a SQLite database with Prisma. Create the
+  following schema:
+  - Bookmark: id, url, title, description, tags (string array), createdAt
+  No authentication needed for now. Configure it so I can run "npm run dev"
+  to start.</code></pre>
+
+<p>Claude Code will create the project structure, install dependencies, configure Prisma, create the schema, run the initial migration, and set everything up. Watch how it handles each step &mdash; creating <code>package.json</code>, running <code>npx create-next-app</code>, editing the Prisma schema, running <code>npx prisma migrate dev</code>.</p>
+
+<h3>Step 2: Build the Core UI</h3>
+
+<pre><code><span class="prompt">&gt;</span> Create the main page that shows all bookmarks in a card grid layout.
+  Each card should show the title, URL (truncated), description preview,
+  and tags as colored pills. Add a form at the top to add new bookmarks
+  with fields for URL, title, description, and tags (comma-separated).
+  Use server actions for the form submission. Make it look clean and modern
+  with a dark theme.</code></pre>
+
+<h3>Step 3: Add Search and Filtering</h3>
+
+<pre><code><span class="prompt">&gt;</span> Add a search bar that filters bookmarks by title, URL, or description
+  in real time. Also add tag filtering - when you click a tag pill on any
+  bookmark, it filters to show only bookmarks with that tag. Use URL
+  search params so the filter state is shareable.</code></pre>
+
+<h3>Step 4: Add Export Functionality</h3>
+
+<pre><code><span class="prompt">&gt;</span> Add an "Export" button that downloads all bookmarks (or filtered results)
+  as a JSON file. Also add a "Export as HTML" option that generates a
+  bookmark file compatible with browser import.</code></pre>
+
+<h3>Step 5: Polish and Deploy</h3>
+
+<pre><code><span class="prompt">&gt;</span> Add loading states, error handling, and empty states to all components.
+  Add a favicon and proper meta tags. Then set up the project for Vercel
+  deployment - make sure it works with the SQLite database in production
+  (or suggest a better approach for production).</code></pre>
+
+<p>At this point, Claude Code will likely suggest switching from SQLite to a hosted database for production (such as Turso, PlanetScale, or Vercel Postgres). This is exactly the kind of architectural insight that makes Claude Code valuable &mdash; it does not just do what you say, it flags problems.</p>
+
+<h3>The Full Build in Numbers</h3>
+
+<p>Building this project manually would take a competent developer 4-6 hours. With Claude Code, the entire build typically takes <strong>20-30 minutes</strong>, including iteration and debugging. That is not a marginal improvement &mdash; it is an order of magnitude faster.</p>
+
+<div class="tip">
+  <span class="label">Pro Tip</span>
+  <p>After each major step, ask Claude Code to <strong>run the app and verify it works</strong>. Say: "Start the dev server, and then use curl to test the API endpoints" or "Start the dev server and take a screenshot." Catching issues early prevents cascading bugs.</p>
+</div>
+
+<div class="mistake">
+  <span class="label">Common Mistake</span>
+  <p>Trying to build the entire app in a single prompt. Even though Claude Code is powerful, breaking the work into logical steps (init, UI, features, polish, deploy) produces much better results. Each step gives Claude Code a clear, focused task with a verifiable outcome.</p>
+</div>
+
+<div class="exercise">
+  <span class="label">Try This Now</span>
+  <p>Follow the five steps above and build the Bookmark Manager. Do not copy-paste the prompts verbatim &mdash; adapt them to your preferred tech stack. If you prefer Vue, Svelte, or plain HTML/JS, tell Claude Code. The point is to experience the full cycle from zero to deployed app.</p>
+</div>
+</section>
+
+<!-- CHAPTER 5 -->
+<section class="chapter" id="ch05">
+<div class="chapter-label">Chapter 05</div>
+<h2>Working with Existing Codebases</h2>
+
+<p>Building from scratch is fun. But most professional development happens inside existing codebases &mdash; often large, complex, and poorly documented. This is where Claude Code truly shines, because it can read and understand code faster than any human.</p>
+
+<h3>The Exploration Phase</h3>
+
+<p>When you point Claude Code at an existing project, start with exploration before making any changes:</p>
+
+<pre><code><span class="prompt">&gt;</span> Analyze this project. Tell me:
+  1. What framework and language it uses
+  2. The overall architecture and directory structure
+  3. How the data flows (database, API, frontend)
+  4. Any obvious issues or technical debt you notice
+  5. Where the main entry points are</code></pre>
+
+<p>Claude Code will read your <code>package.json</code> (or equivalent), scan the directory structure, sample key files, and give you a comprehensive overview. This alone can save hours of onboarding on an unfamiliar project.</p>
+
+<h3>Reading Strategies for Large Repos</h3>
+
+<p>For repositories with hundreds or thousands of files, Claude Code needs guidance on where to focus. Here are the most effective strategies:</p>
+
+<h4>Strategy 1: Top-Down Navigation</h4>
+<pre><code><span class="prompt">&gt;</span> Look at the project structure and identify the main entry point.
+  Then trace the request flow for the /api/users endpoint from
+  the route handler through the service layer to the database query.</code></pre>
+
+<h4>Strategy 2: Search-Based Exploration</h4>
+<pre><code><span class="prompt">&gt;</span> Find all files that reference "stripe" or "payment" in this codebase.
+  Then explain how the payment system works.</code></pre>
+
+<h4>Strategy 3: Test-Guided Understanding</h4>
+<pre><code><span class="prompt">&gt;</span> Look at the test files to understand how the authentication system
+  is supposed to work. Then look at the actual implementation and tell
+  me if there are any gaps between the tests and the code.</code></pre>
+
+<h3>Making Targeted Changes</h3>
+
+<p>The key to modifying existing code with Claude Code is <strong>specificity</strong>. You want to give Claude Code enough context to understand the change but narrow enough scope to avoid unintended side effects.</p>
+
+<pre><code><span class="comment"># Good: Specific file and function</span>
+<span class="prompt">&gt;</span> In src/services/userService.ts, modify the createUser function to
+  also send a welcome email after creating the user. Use the existing
+  emailService that's already imported.
+
+<span class="comment"># Bad: Vague scope</span>
+<span class="prompt">&gt;</span> Add email notifications to the app.</code></pre>
+
+<h3>The "Understand Before Changing" Pattern</h3>
+
+<p>For complex changes, use a two-step approach:</p>
+
+<pre><code><span class="comment"># Step 1: Understand</span>
+<span class="prompt">&gt;</span> Read through the authentication middleware in src/middleware/auth.ts
+  and all the files it imports. Explain how it works and what would need
+  to change to add role-based access control.
+
+<span class="comment"># Step 2: Implement (in the same session, with context loaded)</span>
+<span class="prompt">&gt;</span> Go ahead and implement the role-based access control as you described.
+  Add roles to the User model, update the middleware, and protect the
+  admin routes in src/routes/admin.ts.</code></pre>
+
+<p>This pattern ensures Claude Code has thoroughly understood the existing code before it starts modifying it, dramatically reducing the chance of breaking changes.</p>
+
+<div class="tip">
+  <span class="label">Pro Tip</span>
+  <p>When working with large repos, create a <code>CLAUDE.md</code> that maps out the key directories and their purposes. Even a simple map like "src/models = database models, src/routes = API endpoints, src/services = business logic" dramatically improves Claude Code's ability to navigate the codebase.</p>
+</div>
+
+<div class="tip">
+  <span class="label">Pro Tip</span>
+  <p>Use <code>git diff</code> integration after every change. Ask Claude Code: "Show me the git diff of all changes we've made." Review the diff before committing. This is your safety net against unintended modifications.</p>
+</div>
+
+<div class="exercise">
+  <span class="label">Try This Now</span>
+  <p>Clone an open-source project you have never worked with (try something like <a href="https://github.com/formbricks/formbricks" style="color:var(--blue);">Formbricks</a> or <a href="https://github.com/calcom/cal.com" style="color:var(--blue);">Cal.com</a>). Launch Claude Code in the repo and ask it to analyze the architecture. Then ask it to make a small change &mdash; add a simple feature or fix a minor issue. Experience how Claude Code navigates a codebase it has never seen.</p>
+</div>
+</section>
+
+<!-- CHAPTER 6 -->
+<section class="chapter" id="ch06">
+<div class="chapter-label">Chapter 06</div>
+<h2>The Debug Loop</h2>
+
+<p>Debugging is where most developers spend the majority of their time. It is also where Claude Code delivers the most dramatic time savings. The key technique is what I call the <strong>"describe the symptom" method</strong>.</p>
+
+<h3>The "Describe the Symptom" Technique</h3>
+
+<p>When you hit a bug, do not try to diagnose it yourself before involving Claude Code. Instead, describe exactly what you observe:</p>
+
+<pre><code><span class="prompt">&gt;</span> When I click the "Save" button on the settings page, nothing happens.
+  No error in the browser console, no network request is made. The button
+  should submit the form and save the user's profile changes to the database.</code></pre>
+
+<p>This works better than "there is a bug in the form handler" because:</p>
+<ul>
+  <li>It does not bias Claude Code with a potentially wrong diagnosis</li>
+  <li>It gives Claude Code the <strong>expected behavior</strong> vs. <strong>actual behavior</strong> clearly</li>
+  <li>It lets Claude Code choose its own investigation strategy</li>
+</ul>
+
+<h3>The Debug Loop in Action</h3>
+
+<p>Claude Code follows a systematic debugging process:</p>
+
+<ol>
+  <li><strong>Reproduce:</strong> It looks at the relevant code to understand the expected flow</li>
+  <li><strong>Investigate:</strong> It traces through the code path, checking for obvious issues</li>
+  <li><strong>Hypothesize:</strong> It forms a theory about what is going wrong</li>
+  <li><strong>Test:</strong> It checks its hypothesis (reading more code, running commands)</li>
+  <li><strong>Fix:</strong> It implements the fix</li>
+  <li><strong>Verify:</strong> It runs tests or the app to confirm the fix works</li>
+</ol>
+
+<h3>Real Debugging Examples</h3>
+
+<h4>Example 1: Server Error</h4>
+<pre><code><span class="prompt">&gt;</span> The /api/orders endpoint returns a 500 error when the cart has more
+  than 10 items. It works fine with fewer items. Here's the error from
+  the server logs: "PayloadTooLargeError: request entity too large"</code></pre>
+
+<p>Claude Code will immediately check the Express body parser configuration, find the default size limit, and increase it or implement pagination.</p>
+
+<h4>Example 2: UI Bug</h4>
+<pre><code><span class="prompt">&gt;</span> The modal component opens correctly but the close button doesn't work.
+  Clicking outside the modal also doesn't close it. This used to work
+  yesterday - the only change was adding the new toast notification system.</code></pre>
+
+<p>With the hint about the recent change, Claude Code will check for z-index conflicts, event propagation issues, or portal rendering problems caused by the toast system.</p>
+
+<h4>Example 3: Performance Issue</h4>
+<pre><code><span class="prompt">&gt;</span> The dashboard page takes 12 seconds to load. It used to load in under
+  2 seconds. Run the database queries that the dashboard endpoint makes
+  and tell me which one is slow. The endpoint is in
+  src/app/api/dashboard/route.ts.</code></pre>
+
+<h3>Using Error Logs Effectively</h3>
+
+<p>When you have error output, feed it directly to Claude Code:</p>
+
+<pre><code><span class="prompt">&gt;</span> I get this error when running npm run build:
+
+  TypeError: Cannot read properties of undefined (reading 'map')
+    at ProductList (src/components/ProductList.tsx:24:31)
+    at renderWithHooks (node_modules/react-dom/...)
+
+  Fix this error.</code></pre>
+
+<p>Stack traces are gold for Claude Code. They point directly to the file, line number, and function where the error occurs, giving Claude Code an immediate starting point.</p>
+
+<div class="tip">
+  <span class="label">Pro Tip</span>
+  <p>If Claude Code fixes the immediate error but you suspect there might be related issues, ask: "Are there any other places in the codebase with the same pattern that could have the same bug?" Claude Code will search for similar code patterns and fix them proactively.</p>
+</div>
+
+<div class="mistake">
+  <span class="label">Common Mistake</span>
+  <p>Providing your diagnosis instead of the symptom. Saying "there is a null pointer in the auth middleware" leads Claude Code down a narrow path. Saying "authenticated users are getting redirected to the login page randomly" lets Claude Code cast a wider investigative net &mdash; the real cause might be a cookie expiration issue, not a null pointer at all.</p>
+</div>
+
+<div class="exercise">
+  <span class="label">Try This Now</span>
+  <p>Find a bug in one of your projects (or intentionally introduce one). Describe only the <em>symptom</em> to Claude Code and let it debug. Do not give hints about the root cause. Time how long it takes Claude Code to find and fix the issue compared to how long it would take you manually.</p>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 3: ADVANCED TECHNIQUES -->
+<!-- ============================================================ -->
+
+<div class="part-divider"><h2>Part 3 &mdash; Advanced Techniques</h2></div>
+
+<!-- CHAPTER 7 -->
+<section class="chapter" id="ch07">
+<div class="chapter-label">Chapter 07</div>
+<h2>Multi-File Orchestration</h2>
+
+<p>Real-world projects are not single files. A typical feature might touch the database schema, backend API, frontend components, tests, and documentation. Managing multi-file changes is where Claude Code's agentic nature pays off the most &mdash; and where most users leave performance on the table.</p>
+
+<h3>The Problem with Large Changes</h3>
+
+<p>When a change spans many files, the context window becomes a bottleneck. If Claude Code reads 20 files and then tries to edit them all, it may lose track of earlier files. The solution is <strong>structured decomposition</strong>.</p>
+
+<h3>Strategy 1: The Planning Prompt</h3>
+
+<p>Before making a large change, ask Claude Code to plan first:</p>
+
+<pre><code><span class="prompt">&gt;</span> I want to add a "teams" feature to this SaaS app. Users should be
+  able to create teams, invite members by email, and share resources
+  within a team.
+
+  Before writing any code, create a plan:
+  1. What database schema changes are needed?
+  2. What new API endpoints?
+  3. What frontend components?
+  4. What existing files need modification?
+
+  Output the plan as a numbered list of steps.</code></pre>
+
+<p>Once you have the plan, execute it step by step:</p>
+
+<pre><code><span class="prompt">&gt;</span> Execute step 1 from the plan: make the database schema changes.</code></pre>
+
+<h3>Strategy 2: File-Scoped Instructions</h3>
+
+<p>Explicitly name the files you want changed:</p>
+
+<pre><code><span class="prompt">&gt;</span> Make these changes across the codebase:
+  - prisma/schema.prisma: Add a Team model and TeamMember join table
+  - src/app/api/teams/route.ts: Create CRUD endpoints for teams
+  - src/app/api/teams/invite/route.ts: Create invite endpoint
+  - src/components/TeamSelector.tsx: Create team switcher component
+  - src/lib/auth.ts: Add getCurrentTeam() helper</code></pre>
+
+<h3>Strategy 3: Anchor Files</h3>
+
+<p>When working across many files, use an "anchor file" that ties everything together:</p>
+
+<pre><code><span class="prompt">&gt;</span> Look at src/app/api/teams/route.ts as the starting point. Now make
+  sure every file it imports from is implemented correctly, and that
+  the frontend components that call these endpoints are updated to
+  match the API contract.</code></pre>
+
+<h3>Keeping Context Focused</h3>
+
+<p>Use the <code>/clear</code> command strategically between phases of a large change. A typical workflow:</p>
+
+<ol>
+  <li>Session 1: Database schema + migrations</li>
+  <li><code>/clear</code></li>
+  <li>Session 2: Backend API endpoints</li>
+  <li><code>/clear</code></li>
+  <li>Session 3: Frontend components</li>
+  <li><code>/clear</code></li>
+  <li>Session 4: Tests and integration</li>
+</ol>
+
+<p>Each phase gets a clean context with maximum space for the relevant files.</p>
+
+<div class="tip">
+  <span class="label">Pro Tip</span>
+  <p>After completing a multi-file change, always ask: "Run the linter and type checker across the entire project and fix any issues." This catches cross-file inconsistencies like mismatched imports, type errors, and missing exports that can slip through when changes span many files.</p>
+</div>
+
+<div class="exercise">
+  <span class="label">Try This Now</span>
+  <p>Take an existing project and plan a feature that touches at least 5 files. Use the Planning Prompt strategy to decompose it. Execute each step individually, using <code>/clear</code> between phases. Compare the result quality to what you would get trying to build it all in one prompt.</p>
+</div>
+</section>
+
+<!-- CHAPTER 8 -->
+<section class="chapter" id="ch08">
+<div class="chapter-label">Chapter 08</div>
+<h2>Headless Mode &amp; Automation</h2>
+
+<p>Everything we have covered so far involves interactive sessions &mdash; you and Claude Code, working together in real time. But Claude Code has a powerful headless mode that lets you run it non-interactively in scripts, CI/CD pipelines, and automated workflows. This is where Claude Code transforms from a coding assistant into a coding <em>system</em>.</p>
+
+<h3>The Basics of Headless Mode</h3>
+
+<p>You can pass a prompt directly to Claude Code from the command line:</p>
+
+<pre><code><span class="comment"># Single prompt, non-interactive</span>
+<span class="prompt">$</span> claude <span class="flag">-p</span> <span class="string">"Read package.json and list all dependencies that are outdated"</span>
+
+<span class="comment"># Pipe input into Claude Code</span>
+<span class="prompt">$</span> cat error.log | claude <span class="flag">-p</span> <span class="string">"Analyze this error log and suggest fixes"</span>
+
+<span class="comment"># Output in JSON format for programmatic use</span>
+<span class="prompt">$</span> claude <span class="flag">-p</span> <span class="string">"List all TODO comments in the codebase"</span> <span class="flag">--output-format</span> json</code></pre>
+
+<h3>Using Headless Mode in CI/CD</h3>
+
+<p>Here is a practical GitHub Actions workflow that uses Claude Code for automated code review:</p>
+
+<pre><code><span class="comment"># .github/workflows/claude-review.yml</span>
+<span class="keyword">name</span>: Claude Code Review
+<span class="keyword">on</span>:
+  pull_request:
+    types: [opened, synchronize]
+
+<span class="keyword">jobs</span>:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run Claude Code Review
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          DIFF=$(git diff origin/main...HEAD)
+          claude -p "Review this code diff for bugs, security issues,
+          and style problems. Be concise and actionable.
+
+          $DIFF" --allowedTools "Read" > review.md
+
+      - name: Post Review Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const review = fs.readFileSync('review.md', 'utf8');
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: review
+            });</code></pre>
+
+<h3>Automation Scripts</h3>
+
+<p>Here are practical automation scripts you can use immediately:</p>
+
+<h4>Automated Dependency Updates</h4>
+<pre><code><span class="comment">#!/bin/bash</span>
+<span class="comment"># update-deps.sh - Run weekly via cron</span>
+cd /path/to/project
+claude <span class="flag">-p</span> <span class="string">"Check for outdated npm dependencies. Update any that have
+  minor or patch updates available. Run the test suite after updating.
+  If tests pass, create a commit with the message 'chore: update
+  dependencies'. If tests fail, revert and report which update broke
+  the tests."</span> <span class="flag">--allowedTools</span> <span class="string">"Bash,Read,Write"</span></code></pre>
+
+<h4>Automated Changelog Generation</h4>
+<pre><code><span class="prompt">$</span> claude <span class="flag">-p</span> <span class="string">"Look at all commits since the last git tag. Generate a
+  CHANGELOG entry grouped by: Features, Bug Fixes, Breaking Changes.
+  Write it to CHANGELOG.md at the top of the file."</span></code></pre>
+
+<h4>Code Quality Monitoring</h4>
+<pre><code><span class="prompt">$</span> claude <span class="flag">-p</span> <span class="string">"Analyze the codebase for: 1) Functions longer than 50 lines,
+  2) Files with no test coverage, 3) Circular dependencies, 4) Unused
+  exports. Output as JSON."</span> <span class="flag">--output-format</span> json > quality-report.json</code></pre>
+
+<h3>Security Considerations</h3>
+
+<p>When running Claude Code in automated pipelines, control its permissions carefully:</p>
+
+<ul>
+  <li>Use <code>--allowedTools</code> to restrict which tools Claude Code can use</li>
+  <li>Never give write or execute permissions in untrusted environments</li>
+  <li>Store API keys in CI/CD secrets, never in code</li>
+  <li>Review Claude Code's output before applying changes automatically</li>
+</ul>
+
+<div class="warning">
+  <span class="label">Warning</span>
+  <p>Be very careful with automated write permissions. A CI/CD pipeline that lets Claude Code modify files and push to your repo without human review is a security risk. Always require a human-in-the-loop for production changes.</p>
+</div>
+
+<div class="exercise">
+  <span class="label">Try This Now</span>
+  <p>Create a simple bash script that uses Claude Code in headless mode to analyze your project. Start with: <code>claude -p "Give me a one-paragraph summary of this project and rate its code quality from 1-10"</code>. Then iterate to build a more sophisticated automated report.</p>
+</div>
+</section>
+
+<!-- CHAPTER 9 -->
+<section class="chapter" id="ch09">
+<div class="chapter-label">Chapter 09</div>
+<h2>Custom Tools &amp; MCP Servers</h2>
+
+<p>Out of the box, Claude Code can read files, write files, and run shell commands. But through the <strong>Model Context Protocol (MCP)</strong>, you can extend it with custom tools that connect to databases, APIs, browser automation, and essentially anything with a programmatic interface.</p>
+
+<h3>What is MCP?</h3>
+
+<p>MCP (Model Context Protocol) is an open standard that lets AI models interact with external tools and data sources. Think of it like USB for AI &mdash; a universal connector that lets Claude Code plug into any system.</p>
+
+<p>An MCP server is a small program that exposes tools (functions Claude Code can call), resources (data Claude Code can read), and prompts (pre-configured instructions). Claude Code can connect to multiple MCP servers simultaneously.</p>
+
+<h3>Configuring MCP Servers</h3>
+
+<p>MCP servers are configured in your Claude Code settings:</p>
+
+<pre><code><span class="comment">// .claude/settings.json</span>
+{
+  <span class="string">"mcpServers"</span>: {
+    <span class="string">"postgres"</span>: {
+      <span class="string">"command"</span>: <span class="string">"npx"</span>,
+      <span class="string">"args"</span>: [<span class="string">"-y"</span>, <span class="string">"@modelcontextprotocol/server-postgres"</span>],
+      <span class="string">"env"</span>: {
+        <span class="string">"DATABASE_URL"</span>: <span class="string">"postgresql://user:pass@localhost:5432/mydb"</span>
+      }
+    },
+    <span class="string">"github"</span>: {
+      <span class="string">"command"</span>: <span class="string">"npx"</span>,
+      <span class="string">"args"</span>: [<span class="string">"-y"</span>, <span class="string">"@modelcontextprotocol/server-github"</span>],
+      <span class="string">"env"</span>: {
+        <span class="string">"GITHUB_TOKEN"</span>: <span class="string">"ghp_your_token_here"</span>
+      }
+    }
+  }
+}</code></pre>
+
+<h3>Popular MCP Servers</h3>
+
+<ul>
+  <li><strong>Postgres/MySQL/SQLite</strong> &mdash; Query databases directly. Claude Code can run SELECT queries, inspect schemas, and help optimize queries.</li>
+  <li><strong>GitHub</strong> &mdash; Create issues, review PRs, manage releases without leaving Claude Code.</li>
+  <li><strong>Puppeteer/Playwright</strong> &mdash; Browser automation. Claude Code can take screenshots, fill forms, click buttons, and scrape data from web pages.</li>
+  <li><strong>Filesystem (extended)</strong> &mdash; Access files outside the project directory with controlled permissions.</li>
+  <li><strong>Fetch/HTTP</strong> &mdash; Make HTTP requests to external APIs.</li>
+  <li><strong>Memory</strong> &mdash; Persistent knowledge graph that survives across sessions.</li>
+</ul>
+
+<h3>Building Your Own MCP Server</h3>
+
+<p>You can create custom MCP servers for your specific needs. Here is a minimal example using the TypeScript SDK:</p>
+
+<pre><code><span class="comment">// my-mcp-server/index.ts</span>
+<span class="keyword">import</span> { McpServer } <span class="keyword">from</span> <span class="string">"@modelcontextprotocol/sdk/server/mcp.js"</span>;
+<span class="keyword">import</span> { StdioServerTransport } <span class="keyword">from</span> <span class="string">"@modelcontextprotocol/sdk/server/stdio.js"</span>;
+<span class="keyword">import</span> { z } <span class="keyword">from</span> <span class="string">"zod"</span>;
+
+<span class="keyword">const</span> server = <span class="keyword">new</span> McpServer({
+  name: <span class="string">"my-custom-tools"</span>,
+  version: <span class="string">"1.0.0"</span>,
+});
+
+<span class="comment">// Define a custom tool</span>
+server.tool(
+  <span class="string">"check-uptime"</span>,
+  <span class="string">"Check if a website is up and measure response time"</span>,
+  { url: z.string().url() },
+  <span class="keyword">async</span> ({ url }) => {
+    <span class="keyword">const</span> start = Date.now();
+    <span class="keyword">const</span> res = <span class="keyword">await</span> fetch(url);
+    <span class="keyword">const</span> duration = Date.now() - start;
+    <span class="keyword">return</span> {
+      content: [{
+        type: <span class="string">"text"</span>,
+        text: `${url}: ${res.status} (${duration}ms)`
+      }]
+    };
+  }
+);
+
+<span class="keyword">const</span> transport = <span class="keyword">new</span> StdioServerTransport();
+<span class="keyword">await</span> server.connect(transport);</code></pre>
+
+<h3>Practical MCP Workflows</h3>
+
+<pre><code><span class="comment"># With Postgres MCP connected:</span>
+<span class="prompt">&gt;</span> Query the users table and find all users who signed up in the last
+  7 days but haven't made a purchase. Show me the results and suggest
+  what we could do to improve conversion.
+
+<span class="comment"># With GitHub MCP connected:</span>
+<span class="prompt">&gt;</span> Look at all open issues labeled "bug" in our repo. For each one,
+  check if there's already a PR that addresses it. Create a summary
+  report of unaddressed bugs.
+
+<span class="comment"># With Puppeteer MCP connected:</span>
+<span class="prompt">&gt;</span> Navigate to our staging site, log in with the test credentials,
+  go to the settings page, and take a screenshot. Does the new
+  layout match what we implemented?</code></pre>
+
+<div class="tip">
+  <span class="label">Pro Tip</span>
+  <p>The MCP ecosystem is growing rapidly. Check the <a href="https://github.com/modelcontextprotocol/servers" style="color:var(--blue);">official MCP servers repository</a> and <a href="https://mcp.so" style="color:var(--blue);">mcp.so</a> for community-built servers. If a tool you need does not exist yet, building a basic MCP server takes less than an hour &mdash; and Claude Code itself can help you build it.</p>
+</div>
+
+<div class="exercise">
+  <span class="label">Try This Now</span>
+  <p>Install the GitHub MCP server by adding it to your <code>.claude/settings.json</code>. Then ask Claude Code to list your recent GitHub notifications, or summarize open PRs on a repo you contribute to. Experience how MCP extends Claude Code's capabilities beyond the local filesystem.</p>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 4: AGENT SYSTEMS -->
+<!-- ============================================================ -->
+
+<div class="part-divider"><h2>Part 4 &mdash; Agent Systems</h2></div>
+
+<!-- CHAPTER 10 -->
+<section class="chapter" id="ch10">
+<div class="chapter-label">Chapter 10</div>
+<h2>Building AI Agents with Claude Code</h2>
+
+<p>An AI agent is a system that can pursue goals autonomously &mdash; perceiving its environment, making decisions, taking actions, and iterating based on results. Claude Code is not just a tool you <em>use</em> to build agents; it <em>is</em> an agent. And you can use it to build other agent systems.</p>
+
+<h3>Agent Architecture Patterns</h3>
+
+<p>There are three primary patterns for building agents with Claude Code:</p>
+
+<h4>Pattern 1: The Loop Agent</h4>
+<p>An agent that runs in a loop, checking conditions and taking actions:</p>
+
+<pre><code><span class="comment">// agent-loop.ts - A monitoring agent</span>
+<span class="keyword">import</span> { execSync } <span class="keyword">from</span> <span class="string">"child_process"</span>;
+
+<span class="keyword">function</span> runClaudeCode(prompt: string): string {
+  <span class="keyword">return</span> execSync(
+    `claude -p "${prompt}" --output-format json --allowedTools "Bash,Read"`,
+    { encoding: <span class="string">"utf-8"</span>, timeout: 60000 }
+  );
+}
+
+<span class="comment">// Check every 5 minutes</span>
+setInterval(<span class="keyword">async</span> () => {
+  <span class="keyword">const</span> analysis = runClaudeCode(
+    `Check the application logs in /var/log/myapp/.
+     If there are any ERROR level entries in the last 5 minutes,
+     analyze the root cause and suggest a fix.
+     Return JSON: { hasErrors: boolean, summary: string, suggestedFix: string }`
+  );
+
+  <span class="keyword">const</span> result = JSON.parse(analysis);
+  <span class="keyword">if</span> (result.hasErrors) {
+    <span class="comment">// Send alert via Slack, email, etc.</span>
+    sendAlert(result);
+  }
+}, 5 * 60 * 1000);</code></pre>
+
+<h4>Pattern 2: The Pipeline Agent</h4>
+<p>An agent that processes items through a series of stages:</p>
+
+<pre><code><span class="comment">// Each stage is a focused Claude Code call</span>
+<span class="keyword">const</span> stages = [
+  <span class="string">"Read the requirements document at docs/requirements.md"</span>,
+  <span class="string">"Generate the database schema based on the requirements"</span>,
+  <span class="string">"Create the API endpoints that the schema needs"</span>,
+  <span class="string">"Generate test cases for each endpoint"</span>,
+  <span class="string">"Run the tests and fix any failures"</span>,
+];
+
+<span class="keyword">for</span> (<span class="keyword">const</span> stage <span class="keyword">of</span> stages) {
+  <span class="keyword">await</span> runClaudeCode(stage);
+  <span class="comment">// Each stage builds on the files created by previous stages</span>
+}</code></pre>
+
+<h4>Pattern 3: The Multi-Agent System</h4>
+<p>Multiple Claude Code instances working on different parts of a problem:</p>
+
+<pre><code><span class="comment">// Run specialized agents in parallel</span>
+<span class="keyword">const</span> [security, performance, accessibility] = <span class="keyword">await</span> Promise.all([
+  runClaudeCode(<span class="string">"Audit this codebase for security vulnerabilities"</span>),
+  runClaudeCode(<span class="string">"Profile the API endpoints and identify bottlenecks"</span>),
+  runClaudeCode(<span class="string">"Check all pages for accessibility compliance"</span>),
+]);
+
+<span class="comment">// Combine results with a coordinator agent</span>
+<span class="keyword">const</span> report = <span class="keyword">await</span> runClaudeCode(
+  `Combine these three audit reports into a single prioritized action plan:
+   Security: ${security}
+   Performance: ${performance}
+   Accessibility: ${accessibility}`
+);</code></pre>
+
+<h3>The Subagent Pattern</h3>
+
+<p>Claude Code can also spawn subagents within an interactive session. When you are working on a complex task, Claude Code can delegate subtasks to focused agent instances:</p>
+
+<pre><code><span class="prompt">&gt;</span> For each API endpoint in src/app/api/, create a comprehensive test
+  file. Use a subagent for each endpoint so the work is parallelized.</code></pre>
+
+<p>Claude Code will dispatch focused tasks to subagent processes, each working in a narrow context, then collect and integrate the results.</p>
+
+<h3>Error Recovery</h3>
+
+<p>Robust agents handle failures gracefully. Always build retry logic and fallback strategies:</p>
+
+<pre><code><span class="keyword">async function</span> resilientAgent(task: string, maxRetries = 3) {
+  <span class="keyword">for</span> (<span class="keyword">let</span> i = 0; i < maxRetries; i++) {
+    <span class="keyword">try</span> {
+      <span class="keyword">const</span> result = <span class="keyword">await</span> runClaudeCode(task);
+      <span class="keyword">return</span> JSON.parse(result);
+    } <span class="keyword">catch</span> (error) {
+      <span class="keyword">if</span> (i === maxRetries - 1) <span class="keyword">throw</span> error;
+      <span class="comment">// Refine the prompt on retry</span>
+      task = `Previous attempt failed with: ${error.message}. ${task}`;
+    }
+  }
+}</code></pre>
+
+<div class="tip">
+  <span class="label">Pro Tip</span>
+  <p>When building multi-agent systems, always have a "coordinator" agent that reviews the work of other agents. Without coordination, parallel agents can create conflicting changes. The coordinator merges results and resolves conflicts.</p>
+</div>
+
+<div class="exercise">
+  <span class="label">Try This Now</span>
+  <p>Build a simple monitoring agent: a bash script that runs every 10 minutes (via cron), uses Claude Code in headless mode to check your application logs for errors, and sends you a summary via a webhook or email. Start simple and iterate.</p>
+</div>
+</section>
+
+<!-- CHAPTER 11 -->
+<section class="chapter" id="ch11">
+<div class="chapter-label">Chapter 11</div>
+<h2>The Product Factory</h2>
+
+<p>This chapter is the heart of turning Claude Code skills into money. The Product Factory is a system for using Claude Code to research, build, and deploy digital products at a pace that was previously impossible for solo developers.</p>
+
+<h3>The Product Factory Pipeline</h3>
+
+<p>Every product goes through five stages. Claude Code participates in all of them:</p>
+
+<ol>
+  <li><strong>Research</strong> &mdash; Identify a problem worth solving and validate demand</li>
+  <li><strong>Design</strong> &mdash; Define the solution and its architecture</li>
+  <li><strong>Build</strong> &mdash; Write the code, create the content, design the assets</li>
+  <li><strong>Package</strong> &mdash; Create the sales page, payment flow, and delivery system</li>
+  <li><strong>Deploy</strong> &mdash; Launch and start collecting revenue</li>
+</ol>
+
+<h3>Stage 1: Research with Claude Code</h3>
+
+<pre><code><span class="prompt">&gt;</span> Research the market for developer productivity tools. I want to find
+  a specific pain point that:
+  1. Developers complain about frequently (check GitHub issues, Reddit,
+     Twitter trends)
+  2. Existing solutions are expensive or incomplete
+  3. Could be solved with a CLI tool or web app in under a week
+
+  Give me 5 specific product ideas with estimated market size.</code></pre>
+
+<p>With MCP servers for web browsing and API access, Claude Code can actually perform this research &mdash; scraping forums, analyzing GitHub trending repos, and synthesizing market data.</p>
+
+<h3>Stage 2: Design the Solution</h3>
+
+<pre><code><span class="prompt">&gt;</span> We're building a CLI tool that converts Figma designs to clean
+  Tailwind CSS code. Create:
+  1. A product requirements document
+  2. Technical architecture
+  3. User flow diagram (as text)
+  4. List of MVP features vs. nice-to-haves
+  5. Estimated timeline for a solo developer using Claude Code</code></pre>
+
+<h3>Stage 3: Build at Speed</h3>
+
+<p>This is where the chapters you have already read come together. Using the task-based mental model, multi-file orchestration, and debugging loop, you can build a complete product in days instead of weeks:</p>
+
+<pre><code><span class="comment"># Day 1: Core functionality</span>
+<span class="prompt">&gt;</span> Set up the project structure and implement the core Figma API
+  integration. Parse design tokens and convert them to Tailwind classes.
+
+<span class="comment"># Day 2: Polish and edge cases</span>
+<span class="prompt">&gt;</span> Handle nested components, responsive breakpoints, and auto-layout.
+  Add error handling for unsupported Figma features.
+
+<span class="comment"># Day 3: Distribution and monetization</span>
+<span class="prompt">&gt;</span> Create the npm package configuration, add a license key validation
+  system, create the landing page, and set up Stripe payment.</code></pre>
+
+<h3>Stage 4: Package for Sale</h3>
+
+<p>Claude Code can build your entire sales infrastructure:</p>
+
+<pre><code><span class="prompt">&gt;</span> Create a landing page for this product. It should include:
+  - Hero section with headline and demo GIF placeholder
+  - Feature grid showing the 4 main benefits
+  - Pricing section ($29 one-time purchase)
+  - FAQ section
+  - Stripe checkout integration
+  Use Next.js with Tailwind. Deploy-ready for Vercel.</code></pre>
+
+<h3>Stage 5: Automated Deployment</h3>
+
+<pre><code><span class="prompt">&gt;</span> Set up the deployment pipeline:
+  1. Configure Vercel for the landing page
+  2. Set up npm publish workflow for the CLI tool
+  3. Create a webhook that sends license keys after Stripe payment
+  4. Set up basic analytics with Plausible or Umami</code></pre>
+
+<h3>Product Types That Work Well</h3>
+
+<ul>
+  <li><strong>Developer tools</strong> (CLI utilities, VS Code extensions, npm packages)</li>
+  <li><strong>Micro-SaaS</strong> (single-feature web apps solving specific problems)</li>
+  <li><strong>Templates and boilerplates</strong> (starter kits for specific tech stacks)</li>
+  <li><strong>Digital guides and courses</strong> (like the one you are reading right now)</li>
+  <li><strong>API services</strong> (hosted tools that other developers pay to use)</li>
+  <li><strong>Automation scripts</strong> (packaged solutions for common business workflows)</li>
+</ul>
+
+<div class="tip">
+  <span class="label">Pro Tip</span>
+  <p>The fastest path to revenue is building something <em>you</em> need. If you have been manually doing something repetitive, build a tool to automate it, then package and sell that tool. Your personal pain point is shared by thousands of other developers.</p>
+</div>
+
+<div class="mistake">
+  <span class="label">Common Mistake</span>
+  <p>Spending weeks perfecting a product before validating demand. Build the MVP in 2-3 days with Claude Code, put up a landing page, and see if anyone is willing to pay. You can always improve the product after you have paying customers.</p>
+</div>
+
+<div class="exercise">
+  <span class="label">Try This Now</span>
+  <p>Identify one repetitive task in your daily workflow. Use Claude Code to build a tool that automates it &mdash; not in a week, but today. Make it work for you first. Tomorrow, create a landing page for it. The day after, share it in a relevant community and see if others want it.</p>
+</div>
+</section>
+
+<!-- CHAPTER 12 -->
+<section class="chapter" id="ch12">
+<div class="chapter-label">Chapter 12</div>
+<h2>Scaling to $1K/Day</h2>
+
+<p>Earning $1,000 per day ($365K/year) from digital products is ambitious but achievable when you combine Claude Code's speed with the right strategies. This chapter lays out realistic, proven paths to get there.</p>
+
+<h3>The Math</h3>
+
+<p>$1K/day can come from many combinations:</p>
+
+<ul>
+  <li><strong>1 product at $29</strong> = 35 sales/day</li>
+  <li><strong>3 products at $29</strong> = 12 sales/day each</li>
+  <li><strong>1 SaaS at $49/month</strong> = ~700 active subscribers (with churn)</li>
+  <li><strong>Freelance automation</strong> = 2-3 clients paying $300-500/month</li>
+  <li><strong>Mix of all above</strong> = most realistic and most resilient</li>
+</ul>
+
+<p>The common pattern among people who reach $1K/day is <strong>portfolio diversification</strong>. They do not bet everything on a single product. They build multiple small revenue streams that compound.</p>
+
+<h3>Strategy 1: The Product Portfolio</h3>
+
+<p>Use the Product Factory pipeline from Chapter 11 to launch one new product per week. Not every product will succeed, but with Claude Code's speed, the cost of a failed product is minimal (a few days of work instead of months).</p>
+
+<p><strong>Week 1-4:</strong> Launch 4 products. Expect 1-2 to get traction.</p>
+
+<p><strong>Month 2:</strong> Double down on the winners. Add features, improve marketing, create content around them.</p>
+
+<p><strong>Month 3-6:</strong> Continue launching new products while growing winners. Kill products that are not gaining traction.</p>
+
+<p>After 6 months, you should have 3-5 products generating consistent revenue. If each generates $200-300/day, you are at $1K/day.</p>
+
+<h3>Strategy 2: The Automation Agency</h3>
+
+<p>Many businesses need custom automation but cannot afford (or find) traditional developers. Position yourself as an "AI automation specialist":</p>
+
+<ol>
+  <li><strong>Identify repetitive business processes</strong> (data entry, report generation, email workflows, inventory management)</li>
+  <li><strong>Build custom automation using Claude Code</strong> in hours instead of weeks</li>
+  <li><strong>Charge $500-$5,000 per automation</strong> plus monthly maintenance</li>
+  <li><strong>Productize common automations</strong> and sell them as templates</li>
+</ol>
+
+<pre><code><span class="comment"># Example: Build a custom invoice processor for a client</span>
+<span class="prompt">&gt;</span> Build a Node.js service that:
+  1. Watches a Gmail inbox for emails with PDF attachments
+  2. Extracts invoice data (vendor, amount, date, line items) using OCR
+  3. Validates the data against our vendor database
+  4. Creates entries in QuickBooks via their API
+  5. Sends a Slack notification with a summary
+  Make it deployable on Railway or Render.</code></pre>
+
+<p>A service like this might take a traditional developer 2-3 weeks. With Claude Code, you can build it in a day. Charge $3,000. That is a spectacular hourly rate.</p>
+
+<h3>Strategy 3: Content-Powered Products</h3>
+
+<p>Create educational content (courses, guides, tutorials) that showcase your Claude Code expertise. The content itself is a product, and it drives traffic to your other products:</p>
+
+<ul>
+  <li><strong>YouTube tutorials</strong> showing Claude Code building real projects</li>
+  <li><strong>Paid courses</strong> teaching specific Claude Code workflows</li>
+  <li><strong>Newsletter</strong> with weekly Claude Code tips and tutorials</li>
+  <li><strong>Template marketplace</strong> selling Claude Code project templates and CLAUDE.md files</li>
+</ul>
+
+<h3>Strategy 4: The SaaS Play</h3>
+
+<p>Build a SaaS product that solves a recurring problem. Claude Code makes the build fast; the recurring revenue makes the business sustainable:</p>
+
+<pre><code><span class="comment"># Build a SaaS in a weekend</span>
+<span class="prompt">&gt;</span> Build a web app that monitors competitor pricing. Users enter URLs of
+  competitor product pages, and we check prices daily, track changes,
+  and send email alerts when prices change. Use Next.js, Prisma, a cron
+  job for monitoring, and Resend for emails. Include Stripe subscription
+  billing at $29/month.</code></pre>
+
+<p>A SaaS like this, once it reaches 35 paying subscribers at $29/month, generates $1K/month passively. Build 10 of them. Kill the ones that don't work. Scale the ones that do.</p>
+
+<h3>The Compounding Effect</h3>
+
+<p>The real power of Claude Code for business is <strong>compounding speed</strong>. Each product you build teaches you patterns. Each CLAUDE.md file you write makes the next project faster. Each MCP server you configure expands your capabilities. After three months of consistent building, you will be shipping products in hours that used to take weeks.</p>
+
+<h3>Revenue Stacking Timeline</h3>
+
+<table style="width:100%; border-collapse:collapse; margin:1rem 0 1.5rem;">
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.6rem 1rem; color:var(--text-muted); font-size:0.85rem;">Timeline</td>
+    <td style="padding:0.6rem 1rem; color:var(--text-muted); font-size:0.85rem;">Activity</td>
+    <td style="padding:0.6rem 1rem; color:var(--text-muted); font-size:0.85rem;">Target Revenue</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Month 1</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Launch 4 small products</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">$500-1,000</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Month 2</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Scale winners + 2 new products</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">$2,000-4,000</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Month 3</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Add SaaS + freelance clients</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">$5,000-10,000</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Month 4-6</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Compound and systematize</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">$10,000-20,000</td>
+  </tr>
+  <tr>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Month 6+</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">Portfolio generating $30K/mo</td>
+    <td style="padding:0.5rem 1rem; color:var(--text-secondary);">$1K/day</td>
+  </tr>
+</table>
+
+<h3>The Mindset Shift</h3>
+
+<p>The biggest barrier to $1K/day is not technical &mdash; it is psychological. Most developers are used to building things for others (as employees) and have never sold anything directly. Here are the mindset shifts that matter:</p>
+
+<ul>
+  <li><strong>Ship fast, iterate later.</strong> Your first version does not need to be perfect. It needs to exist.</li>
+  <li><strong>Charge what it is worth.</strong> If your tool saves someone 5 hours/month and their time is worth $100/hour, a $29 price is a bargain.</li>
+  <li><strong>Build in public.</strong> Share your process. People buy from people they know and trust.</li>
+  <li><strong>Automate yourself out of the loop.</strong> Use Claude Code to automate customer support, bug fixes, and feature development. Your goal is a system that runs without you.</li>
+</ul>
+
+<div class="tip">
+  <span class="label">Pro Tip</span>
+  <p>Track everything. Create a spreadsheet with every product, its launch date, revenue, and time invested. Calculate your effective hourly rate for each product. Double down on high-ROI products and kill low-ROI ones. Data-driven decisions compound faster than gut feelings.</p>
+</div>
+
+<div class="exercise">
+  <span class="label">Try This Now</span>
+  <p>Right now, today, pick one of the four strategies above. Open Claude Code and take the first concrete step:</p>
+  <ul style="color:var(--text-secondary);">
+    <li>Product Portfolio: Build and launch a small product this week.</li>
+    <li>Automation Agency: Build one automation for your own workflow and document it as a case study.</li>
+    <li>Content: Record yourself building something with Claude Code and post it.</li>
+    <li>SaaS: Spin up a landing page for a SaaS idea and see if anyone signs up for the waitlist.</li>
+  </ul>
+  <p>The difference between people who reach $1K/day and those who don't is simple: the first group started.</p>
+</div>
+</section>
+
+</div><!-- end .container -->
+
+<footer class="site-footer">
+  <p><span class="brand">Claude Code Masterclass</span></p>
+  <p style="margin-top:0.5rem;">Copyright &copy; 2025. All rights reserved. This guide is for personal use only. Do not redistribute.</p>
+  <p style="margin-top:0.5rem; font-size:0.75rem;">Claude Code is a product of Anthropic. This guide is an independent educational resource and is not affiliated with or endorsed by Anthropic.</p>
+</footer>
+
+</body>
+</html>
