@@ -1,2 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /guide.html
+Disallow: /thank-you.html
+
+Sitemap: https://teja-2k.github.io/claude-code-masterclass/sitemap.xml
